@@ -1,5 +1,7 @@
 <template>
-    <h2>Content</h2>
+    <div class="content">
+        <h2>Content</h2>
+    </div>
 </template>
 
 <script>
@@ -9,5 +11,7 @@ export default {
 </script>
 
 <style>
-
+    .content {
+        grid-area: content;
+    }
 </style>

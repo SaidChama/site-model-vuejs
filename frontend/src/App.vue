@@ -20,5 +20,22 @@ export default {
 </script>
 
 <style>
+	body {
+		margin: 0px;
+	}
 
+	#app {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+
+		height: 100vh;
+		display: grid;
+		grid-template-rows: 80px 1fr 40px;
+		grid-template-columns: 200px 1fr;
+		grid-template-areas:
+			"header header"
+			"menu content"
+			"menu footer";
+		
+	}
 </style>
