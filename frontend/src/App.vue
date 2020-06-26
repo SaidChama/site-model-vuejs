@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<Header />
+		<Header title="Site Name" />
 		<Menu />
 		<Content />
 		<Footer />
