@@ -12,7 +12,7 @@ export default {
 
 <style>
     .footer {
-        background-color: #ddd;
+        background-color: #CCC;
         margin: 0px;
         grid-area: footer;
     }

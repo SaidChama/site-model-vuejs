@@ -12,6 +12,7 @@ export default {
 
 <style>
     .content {
+        background-color: #DDD;
         grid-area: content;
     }
 </style>

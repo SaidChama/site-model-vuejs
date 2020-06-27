@@ -1,11 +1,11 @@
 <template>
     <div class="header">
-        <a href="" class="menu-toggle">
+        <a class="menu-toggle" @click="toggleMenu" v-if="!hideToggle">
             <i class="menu-toggle fa fa-bars"></i>
         </a>
-        <div class="title">
+        <a href="" class="title">
             {{ title }}
-        </div>
+        </a>
         <a href="" class="signin">
             <i class="signin fa fa-users"> Employee Area</i>
         </a>
@@ -16,7 +16,13 @@
 export default {
     name: 'Header',
     props: {
-        title: String
+        title: String,
+        hideToggle: Boolean
+    },
+    methods: {
+        toggleMenu() {
+            this.$store.commit('toggleMenu')
+        }
     }
 }
 </script>
@@ -34,16 +40,18 @@ export default {
         background-color: #3f3c3c;
         padding: 0px 12px;
         border-radius: 10px;
-        margin-left: 70px;
+        margin-left: 15px;
     }
 
     .header .menu-toggle {
+        cursor: pointer;
         color: #DDD;
         font-size: 2.5rem;
     }
 
     .title {
-        font-size: 4rem;
+        text-decoration: none;
+        font-size: 2rem;
         font-weight: 100;
         color: #fff;
     }
