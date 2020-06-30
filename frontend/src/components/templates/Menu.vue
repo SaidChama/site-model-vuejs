@@ -1,15 +1,18 @@
 <template>
     <div class="menu" v-show="isMenuVisible">
-        <h2>Menu</h2>
+        <MenuComponent path="/" component="Início"/>
+        <MenuComponent path="/quem-somos" component="Quem Somos"/>
     </div>
 
 </template>
 
 <script>
+import MenuComponent from './MenuComponent'
 import { mapState } from 'vuex'
 
 export default {
     name: 'Menu',
+    components: { MenuComponent },
     computed: mapState(['isMenuVisible'])
 }
 </script>

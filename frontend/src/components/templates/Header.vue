@@ -3,12 +3,12 @@
         <a class="menu-toggle" @click="toggleMenu" v-if="!hideToggle">
             <i class="menu-toggle fa fa-bars"></i>
         </a>
-        <a href="" class="title">
+        <router-link to="/" class="title">
             {{ title }}
-        </a>
-        <a href="" class="signin">
+        </router-link>
+        <router-link to ="/login" class="signin">
             <i class="signin fa fa-users"> Employee Area</i>
-        </a>
+        </router-link>
     </div>
 </template>
 
