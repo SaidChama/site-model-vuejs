@@ -1,13 +1,13 @@
 <template>
     <div class="header">
-        <a class="menu-toggle" @click="toggleMenu" v-if="!hideToggle">
+        <a class="menu-toggle" @click="toggleMenu" v-if="!hideToggle && $route.name !== 'auth'" >
             <i class="menu-toggle fa fa-bars"></i>
         </a>
-        <router-link to="/" class="title">
-            {{ title }}
-        </router-link>
-        <router-link to ="/login" class="signin">
-            <i class="signin fa fa-users"> Employee Area</i>
+        <h1 class="title">
+            <router-link class="title-name" to="/" >{{ title }}</router-link>
+        </h1>
+        <router-link to ="/login" class="signin" v-if="$route.name !== 'auth'">
+            <i class="signin fa fa-users" /><span class="signin"> Employee Area</span>
         </router-link>
     </div>
 </template>
@@ -32,7 +32,7 @@ export default {
         background: linear-gradient(to right, #000000, #771a1a);
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         grid-area: header;
     }
@@ -46,12 +46,17 @@ export default {
     .header .menu-toggle {
         cursor: pointer;
         color: #DDD;
-        font-size: 2.5rem;
+        font-size: 1.8rem;
     }
 
-    .title {
+    .title {        
+        flex-grow: 1;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .title .title-name {
         text-decoration: none;
-        font-size: 2rem;
         font-weight: 100;
         color: #fff;
     }
@@ -61,8 +66,9 @@ export default {
         margin-right: 15px;
     }
 
-    i.signin {
+    .header .signin {
         color: #fff;
-        font-size: 2rem;
+        font-size: 1.3rem;
+        
     }
 </style>
