@@ -1,5 +1,5 @@
 <template>
-    <PageTitle icon="fa fa-home" main="Quem Somos" />
+    <PageTitle icon="fa fa-home" main="Info" />
 </template>
 
 <script>

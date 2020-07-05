@@ -1,7 +1,7 @@
 <template>
     <div class="menu" v-show="isMenuVisible">
-        <MenuComponent path="/" component="Início"/>
-        <MenuComponent path="/quem-somos" component="Quem Somos"/>
+        <MenuComponent path="/" component="Home"/>
+        <MenuComponent path="/info" component="Info"/>
     </div>
 
 </template>

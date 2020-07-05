@@ -1,7 +1,7 @@
 <template>
-	<div id="app" :class="{'hide-menu': !isMenuVisible}">
+	<div id="app" :class="{'hide-menu': !isMenuVisible || $route.name === 'auth'}">
 		<Header title="Site Name" />
-		<Menu />
+		<Menu v-if="$route.name !== 'auth'" />
 		<Content />
 		<Footer />
 	</div>
@@ -22,6 +22,10 @@ export default {
 </script>
 
 <style>
+	* {
+		font-family: 'Montserrat', sans-serif;
+	}
+
 	body {
 		margin: 0px;
 	}
@@ -32,7 +36,7 @@ export default {
 
 		height: 100vh;
 		display: grid;
-		grid-template-rows: 80px 1fr 40px;
+		grid-template-rows: 60px 1fr 40px;
 		grid-template-columns: 200px 1fr;
 		grid-template-areas:
 			"header header"

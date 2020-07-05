@@ -17,7 +17,7 @@ const routes = [{
     component: Auth
 }, {
     name: 'whoWeAre',
-    path: '/quem-somos',
+    path: '/info',
     component: WhoWeAre
 }]
 
