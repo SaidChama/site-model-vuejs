@@ -6,15 +6,19 @@
         <h1 class="title">
             <router-link class="title-name" to="/" >{{ title }}</router-link>
         </h1>
-        <router-link to ="/login" class="signin" v-if="$route.name !== 'auth'">
+        <router-link to ="/login" class="signin" v-if="$route.name !== 'auth' && 1 === 2">
             <i class="signin fa fa-users" /><span class="signin"> Employee Area</span>
         </router-link>
+        <UserDropdown />
     </div>
 </template>
 
 <script>
+import UserDropdown from './UserDropdown'
+
 export default {
     name: 'Header',
+    components: { UserDropdown },
     props: {
         title: String,
         hideToggle: Boolean
@@ -62,13 +66,15 @@ export default {
     }
 
     a.signin {
+        padding-right: 15px;
+    }
+
+    a.signin:hover {
         text-decoration: none;
-        margin-right: 15px;
     }
 
     .header .signin {
         color: #fff;
         font-size: 1.3rem;
-        
     }
 </style>
