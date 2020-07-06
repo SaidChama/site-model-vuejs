@@ -22,6 +22,7 @@ export default {
     }
 
     .button h2:hover {
+        text-decoration: none;
         background: linear-gradient(to right, #fff, #aaa);
         color: #303030;
     }

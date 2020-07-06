@@ -4,19 +4,35 @@
             <img src="@/assets/generic-logo.png" alt="Logo">
             <hr>
             <div class="auth-title">Login</div>
-            <input label="Insira o E-mail: " name="email" type="text" placeholder="E-mail" />
-            <input name="password" type="password" placeholder="Password" />
-            <button>Log-in</button>
+            <input v-model="user.email" name="email" type="text" placeholder="E-mail" />
+            <input v-model="user.password" name="password" type="password" placeholder="Password" />
+            <button @click="signin">Log-in</button>
         </div>
     </div>
 </template>
 
 <script>
-import PageTitle from '../templates/PageTitle'
+import { baseApiUrl, showError, userKey } from '@/global'
+import axios from 'axios'
 
 export default {
     name: 'Auth',
-    components: { PageTitle }
+    data: function() {
+        return {
+            user: {}
+        }
+    },
+    methods: {
+        signin() {
+            axios.post(`${baseApiUrl}/signin`, this.user)
+                .then(res => {
+                    this.$store.commit('setUser', res.data)
+                    localStorage.setItem(userKey, JSON.stringify(res.data))
+                    this.$router.push({ path: '/' })
+                })
+                .catch(showError)
+        }
+    }
 }
 </script>
 

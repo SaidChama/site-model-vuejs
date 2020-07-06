@@ -6,19 +6,21 @@
         <h1 class="title">
             <router-link class="title-name" to="/" >{{ title }}</router-link>
         </h1>
-        <router-link to ="/login" class="signin" v-if="$route.name !== 'auth' && 1 === 2">
+        <router-link to ="/login" class="signin" v-if="$route.name !== 'auth' && !user">
             <i class="signin fa fa-users" /><span class="signin"> Employee Area</span>
         </router-link>
-        <UserDropdown />
+        <UserDropdown v-if="$route.name !== 'auth' && user"/>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import UserDropdown from './UserDropdown'
 
 export default {
     name: 'Header',
     components: { UserDropdown },
+    computed: mapState(['user']),
     props: {
         title: String,
         hideToggle: Boolean
