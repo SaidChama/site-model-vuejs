@@ -25,7 +25,5 @@ export default {
 
     .menu h2 {
         color: #fff
-    }
-
-    
+    }    
 </style>

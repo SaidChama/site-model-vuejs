@@ -26,6 +26,14 @@ export default {
 		font-family: 'Montserrat', sans-serif;
 	}
 
+	:root {
+		--header-height: 60px;
+		--footer-height: 40px;
+		--content-height: calc(100vh - var(--header-height) - var(--footer-height) - 119px);
+		--menu-width: 200px;
+		--content-width: calc(100vw - var(--menu-width) - 6px)
+	}
+
 	body {
 		margin: 0px;
 	}
@@ -36,8 +44,8 @@ export default {
 
 		height: 100vh;
 		display: grid;
-		grid-template-rows: 60px 1fr 40px;
-		grid-template-columns: 200px 1fr;
+		grid-template-rows: var(--header-height) 1fr var(--footer-height);
+		grid-template-columns: var(--menu-width) 1fr;
 		grid-template-areas:
 			"header header"
 			"menu content"

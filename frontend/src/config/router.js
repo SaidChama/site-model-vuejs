@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Auth from '@/components/auth/Auth'
 import Home from '@/components/publicPages/Home'
 import WhoWeAre from '@/components/publicPages/WhoWeAre'
+import MyAccount from '@/components/myAccount/MyAccount'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,10 @@ const routes = [{
     name: 'whoWeAre',
     path: '/info',
     component: WhoWeAre
+}, {
+    name: 'myAccount',
+    path: '/my-account',
+    component: MyAccount
 }]
 
 const router = new VueRouter({

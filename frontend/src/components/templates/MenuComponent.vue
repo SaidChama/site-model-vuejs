@@ -19,6 +19,7 @@ export default {
     .button h2 {
         margin: 0px;
         padding: 10px 15px;
+        font-size: 1.8rem;
     }
 
     .button h2:hover {

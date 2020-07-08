@@ -15,9 +15,9 @@ export default {
 <style>
 .page-title {
     background-color: #fff;
-    margin: 3px 3px 0px 3px;
+    margin: 3px 3px 3px 3px;
     padding: 15px;
-    box-shadow: (15px, 0, 1px, 3px, 0.3);
+    box-shadow: 0px 0px 14px 6px rgba(0, 0, 0, 0.2);
 }
     .page-title h1 {
         margin: 0px;

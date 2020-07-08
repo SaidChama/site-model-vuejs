@@ -6,7 +6,7 @@
 import PageTitle from '../templates/PageTitle'
 
 export default {
-name: 'Home',
+name: 'WhoWeAre',
 components: { PageTitle }
 }
 </script>
