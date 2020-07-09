@@ -7,6 +7,9 @@ module.exports = app => {
         .get(app.api.user.get)
 
     app.route('/users/:id')
-        .put(app.api.user.save)
+        .put(app.api.user.save)        
         .get(app.api.user.getUserById)
+
+    app.route('/changePassword/:id')
+        .put(app.api.changePassword.change) 
 }

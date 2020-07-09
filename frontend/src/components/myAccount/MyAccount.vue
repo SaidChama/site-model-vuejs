@@ -32,7 +32,7 @@
                                 type="password" required placeholder="Enter new password" />
                         </b-form-group>
                         <b-form-group label="Confirm new password:" label-for="confirm-new-password">
-                            <b-form-input xl-col="3" id="confirm-new-password" v-model="user.newCOnfirmPassword"
+                            <b-form-input xl-col="3" id="confirm-new-password" v-model="user.confirmNewPassword"
                                 type="password" required placeholder="Enter new password again" />
                         </b-form-group>
                     </b-col>
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import { baseApiUrl, showError } from '@/global'
+import axios from 'axios'
 import { mapState } from 'vuex'
 import PageTitle from '../templates/PageTitle'
 
@@ -56,7 +58,7 @@ export default {
     computed: mapState(['user']),
     data() {
         return {
-            mode: 'acc-info'
+            mode: 'acc-info',
         }
     },
     methods: {
@@ -65,9 +67,7 @@ export default {
         },
         changeMode() {
             this.mode = this.mode === 'acc-info' ? 'change-password' : 'acc-info'
-        }
-
-
+        },
     }
 }
 </script>

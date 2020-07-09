@@ -13,16 +13,16 @@ module.exports = app => {
         if(req.params.id) user.id = req.params.id
 
         try {
-            existsOrError(user.name, 'Nome não Informado')
-            existsOrError(user.email, 'E-mail não Informado')
-            existsOrError(user.password, 'Senha não Informada')
-            existsOrError(user.confirmPassword, 'Confirmação de Senha Inválida')
-            equalsOrError(user.password, user.confirmPassword, 'Senhas não conferem')
+            existsOrError(user.name, 'Name is Missing')
+            existsOrError(user.email, 'E-mail is Missing')
+            existsOrError(user.password, 'Password is Missing')
+            existsOrError(user.confirmPassword, 'Invalid Password Confirmation')
+            equalsOrError(user.password, user.confirmPassword, 'Passwords are Different')
 
             const userFromDB = await app.db('users')
                 .where({ email: user.email }).first()
             if(!user.id) {
-                notExistsOrError(userFromDB, 'Usuário já Cadastrado')
+                notExistsOrError(userFromDB, 'User Already Exists')
             }
         } catch(msg) {
             return res.status(400).send(msg)
@@ -60,6 +60,8 @@ module.exports = app => {
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
     }
+
+    
 
     return { save, get, getUserById }
 }
