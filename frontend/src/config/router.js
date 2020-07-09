@@ -5,6 +5,7 @@ import Auth from '@/components/auth/Auth'
 import Home from '@/components/publicPages/Home'
 import WhoWeAre from '@/components/publicPages/WhoWeAre'
 import MyAccount from '@/components/myAccount/MyAccount'
+import SuperAdminPages from '@/components/superAdminPages/SuperAdminPages'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,10 @@ const routes = [{
     name: 'myAccount',
     path: '/my-account',
     component: MyAccount
+}, {
+    name: 'administration',
+    path: '/system-administration',
+    component: SuperAdminPages 
 }]
 
 const router = new VueRouter({

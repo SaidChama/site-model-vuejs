@@ -14,7 +14,7 @@
                 <p class="account-info">
                     <i class="fa fa-user-circle" /> Account Type: {{ this.user.type }}
                 </p>
-                <b-button variant="primary" @click=changeMode() class="password-change">Change Password</b-button>
+                <b-button variant="primary" @click="changeMode" class="password-change">Change Password</b-button>
             </div>
         </div>
         <div class="change-password" v-if="mode==='change-password'">
@@ -39,7 +39,7 @@
                 </b-form>
                 <div class="button-box">
                     <b-button variant="success" @click="changePassword" class="button password-save">Save</b-button>
-                    <b-button variant="secondary" @click=changeMode() class="button password-back">Back</b-button>
+                    <b-button variant="secondary" @click="changeMode" class="button password-back">Back</b-button>
                 </div>
             </div>
         </div>
@@ -78,10 +78,7 @@ export default {
                     this.reset()
                 })
                 .catch(showError)
-        },
-        mounted() {
-
-        }
+        }        
     }
 }
 </script>
