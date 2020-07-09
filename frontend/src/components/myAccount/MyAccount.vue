@@ -6,13 +6,13 @@
             <hr class="line">
             <div class="account-info-box">
                 <p class="account-info">
-                    <i class="fa fa-id-badge" /> Name: {{ user.name }}
+                    <i class="fa fa-id-badge" /> Name: {{ this.user.name }}
                 </p>
                 <p class="account-info">
-                    <i class="fa fa-envelope" /> E-Mail: {{ user.email }}
+                    <i class="fa fa-envelope" /> E-Mail: {{ this.user.email }}
                 </p>
                 <p class="account-info">
-                    <i class="fa fa-user-circle" /> Account Type: {{ accountStatus() }}
+                    <i class="fa fa-user-circle" /> Account Type: {{ this.user.type }}
                 </p>
                 <b-button variant="primary" @click=changeMode() class="password-change">Change Password</b-button>
             </div>
@@ -24,21 +24,21 @@
                 <b-form>
                     <b-col xl="3">
                         <b-form-group label="Password:" label-for="old-password">
-                            <b-form-input id="old-password" v-model="user.oldPassword"
+                            <b-form-input id="old-password" v-model="passwordUpdate.oldPassword"
                                 type="password" required placeholder="Enter current password" />
                         </b-form-group>
                         <b-form-group label="New Password:" label-for="new-password">
-                            <b-form-input id="new-password" v-model="user.newPassword"
+                            <b-form-input id="new-password" v-model="passwordUpdate.newPassword"
                                 type="password" required placeholder="Enter new password" />
                         </b-form-group>
-                        <b-form-group label="Confirm new password:" label-for="confirm-new-password">
-                            <b-form-input xl-col="3" id="confirm-new-password" v-model="user.confirmNewPassword"
+                        <b-form-group label="Confirm new password:" labelInfo-for="confirm-new-password">
+                            <b-form-input xl-col="3" id="confirm-new-password" v-model="passwordUpdate.confirmNewPassword"
                                 type="password" required placeholder="Enter new password again" />
                         </b-form-group>
                     </b-col>
                 </b-form>
                 <div class="button-box">
-                    <b-button variant="success" class="button password-save">Save</b-button>
+                    <b-button variant="success" @click="changePassword" class="button password-save">Save</b-button>
                     <b-button variant="secondary" @click=changeMode() class="button password-back">Back</b-button>
                 </div>
             </div>
@@ -59,15 +59,29 @@ export default {
     data() {
         return {
             mode: 'acc-info',
+            passwordUpdate: {}
         }
     },
     methods: {
-        accountStatus() {
-            return this.user.admin ? 'Admin' : 'Common'
-        },
         changeMode() {
             this.mode = this.mode === 'acc-info' ? 'change-password' : 'acc-info'
+            this.passwordUpdate = {}
         },
+        reset() {
+            this.mode = 'acc-info'
+            this.passwordUpdate = {}
+        },
+        changePassword() {
+            axios.put(`${baseApiUrl}/changePassword/${this.user.id}`, this.passwordUpdate)
+                .then(() => {
+                    this.$toasted.global.defaultSuccess()
+                    this.reset()
+                })
+                .catch(showError)
+        },
+        mounted() {
+
+        }
     }
 }
 </script>
