@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt-nodejs')
 
 module.exports = app => {
-    const { existsOrError, notExistsOrError, equalsOrError } = app.api.validation
+    const { existsOrError, notExistsOrError, equalsOrError, updatePasswordError } = app.api.validation
 
     const encryptPassword = password => {
         const salt = bcrypt.genSaltSync(10)
@@ -15,8 +15,9 @@ module.exports = app => {
         try {
             existsOrError(user.name, 'Name is Missing')
             existsOrError(user.email, 'E-mail is Missing')
-            existsOrError(user.password, 'Password is Missing')
-            existsOrError(user.confirmPassword, 'Invalid Password Confirmation')
+            updatePasswordError(req.params.id, user.password, 'Password is Missing')
+            updatePasswordError(req.params.id, user.confirmPassword, 'Invalid Password Confirmation')
+            existsOrError(user.type, 'Account Type is Missing')
             equalsOrError(user.password, user.confirmPassword, 'Passwords are Different')
 
             const userFromDB = await app.db('users')
@@ -27,14 +28,17 @@ module.exports = app => {
         } catch(msg) {
             return res.status(400).send(msg)
         }
+        if(!user.password) delete user.password
+        else user.password = encryptPassword(user.password)
 
-        user.password = encryptPassword(user.password)
         delete user.confirmPassword
+
 
         if(user.id) {
             app.db('users')
                 .update(user)
                 .where({ id: user.id })
+                .whereNull('deleted')
                 .then(_ => res.status(204).send())
                 .catch(err => res.status(500).send(err))
         } else {
@@ -48,6 +52,7 @@ module.exports = app => {
     const get = (req, res) => {
         app.db('users')
             .select('id', 'name', 'email', 'type')
+            .whereNull('deleted')
             .then(users => res.json(users))
             .catch(err => res.status(500).send(err))
     }
@@ -56,12 +61,26 @@ module.exports = app => {
         app.db('users')
             .select('id', 'name', 'email', 'type')            
             .where({ id: req.params.id })
+            .whereNull('deleted')
             .first()
             .then(user => res.json(user))
             .catch(err => res.status(500).send(err))
     }
 
+    const remove = async (req, res) => {
+        try {
+            const rowsUpdated = await app.db('users')
+                .update({ deleted: true })
+                .where({ id: req.params.id })
+            existsOrError(rowsUpdated, 'User not Found')
+
+            res.status(204).send()
+        } catch {
+            res.status(400).send(msg)
+        }
+    }
+
     
 
-    return { save, get, getUserById }
+    return { save, get, getUserById, remove }
 }

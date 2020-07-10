@@ -9,6 +9,7 @@ module.exports = app => {
     app.route('/users/:id')
         .put(app.api.user.save)        
         .get(app.api.user.getUserById)
+        .delete(app.api.user.remove)
 
     app.route('/changePassword/:id')
         .put(app.api.changePassword.change) 

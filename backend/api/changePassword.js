@@ -26,7 +26,8 @@ module.exports = app => {
         if(!isMatch) return res.status(401).send('Incorrect Current Password')
 
 
-        user.password = encryptPassword(req.body.newPassword)
+        user.password = req.body.newPassword
+        //encryptPassword(req.body.newPassword)
         delete user.oldPassword
         delete user.newPassword
         delete user.confirmNewPassword

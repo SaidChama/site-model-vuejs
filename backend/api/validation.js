@@ -18,5 +18,9 @@ module.exports = app => {
         if(valueA !== valueB) throw msg
     }
 
-    return { existsOrError, notExistsOrError, equalsOrError }
+    function updatePasswordError(id, value, msg) {
+        if(!id) existsOrError(value, msg)
+    }
+
+    return { existsOrError, notExistsOrError, equalsOrError, updatePasswordError }
 }

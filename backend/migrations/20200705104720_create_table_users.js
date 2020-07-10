@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
         table.string('email').notNull().unique()
         table.string('password').notNull()
         table.string('type').notNull().defaultTo('common')
+        table.boolean('deleted')
     })
 };
 
