@@ -1,15 +1,15 @@
 <template>
     <div class="header">
         <a class="menu-toggle" @click="toggleMenu" v-if="!hideToggle && $route.name !== 'auth'" >
-            <i class="menu-toggle fa fa-bars"></i>
+            <i class="menu-toggle fa-lg" :class="icon"></i>
         </a>
         <h1 class="title">
             <router-link class="title-name" to="/" >{{ title }}</router-link>
         </h1>
-        <router-link to ="/login" class="signin" v-if="$route.name !== 'auth' && !user">
+        <router-link to ="/login" class="signin" v-if="$route.name !== 'auth' && !this.$store.state.user">
             <i class="signin fa fa-users" /><span class="signin"> Employee Area</span>
         </router-link>
-        <UserDropdown v-if="$route.name !== 'auth' && user"/>
+        <UserDropdown v-if="$route.name !== 'auth' && this.$store.state.user"/>
     </div>
 </template>
 
@@ -20,10 +20,15 @@ import UserDropdown from './UserDropdown'
 export default {
     name: 'Header',
     components: { UserDropdown },
-    computed: mapState(['user']),
+    computed: {
+        icon() {
+            return this.$store.state.isMenuVisible ? 'fa fa-angle-left' : 'fa fa-angle-down'
+        }
+    },
     props: {
         title: String,
-        hideToggle: Boolean
+        hideToggle: Boolean,
+        toggleButton: String
     },
     methods: {
         toggleMenu() {
@@ -42,17 +47,18 @@ export default {
         align-items: center;
         grid-area: header;
     }
-    .header a.menu-toggle {
-        background-color: #3f3c3c;
-        padding: 0px 12px;
-        border-radius: 10px;
-        margin-left: 15px;
-    }
-
     .header .menu-toggle {
-        cursor: pointer;
+        width: 60px;
+        height: 100%;
+        display: flex;
         color: #DDD;
         font-size: 1.8rem;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+    .menu-toggle:hover {
+        background-color: rgba(138, 119, 119, 0.808);
     }
 
     .title {        

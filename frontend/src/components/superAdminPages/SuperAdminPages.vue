@@ -7,8 +7,8 @@
                     <b-tab title="Account Management" active>
                         <AccountManagement />
                     </b-tab>
-                    <b-tab title="Create New Account">
-                        <CreateAccount />
+                    <b-tab title="Deleted Accounts">
+                        <DeletedAccounts />
                     </b-tab>
                 </b-tabs>
             </b-card>
@@ -19,11 +19,11 @@
 <script>
 import PageTitle from '../templates/PageTitle'
 import AccountManagement from './AccountManagement'
-import CreateAccount from './CreateAccount'
+import DeletedAccounts from './DeletedAccounts'
 
 export default {
     name: 'SuperAdminPages',
-    components: { PageTitle, CreateAccount, AccountManagement }
+    components: { PageTitle, AccountManagement, DeletedAccounts },
 }
 </script>
 
