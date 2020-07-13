@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt-nodejs')
 
 module.exports = app => {
-    const { existsOrError, notExistsOrError, equalsOrError, updatePasswordError } = app.api.validation
+    const { existsOrError, notExistsOrError, equalsOrError, updatePasswordError, accountTypeOrError } = app.api.validation
 
     const encryptPassword = password => {
         const salt = bcrypt.genSaltSync(10)
@@ -25,6 +25,8 @@ module.exports = app => {
             if(!user.id) {
                 notExistsOrError(userFromDB, 'User Already Exists')
             }
+
+            // accountTypeOrError(userFromDB.type, user.type, 'superAdmin', "Can't change superAdmin's password")
         } catch(msg) {
             return res.status(400).send(msg)
         }

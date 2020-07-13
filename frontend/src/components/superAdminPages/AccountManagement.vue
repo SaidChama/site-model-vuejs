@@ -20,16 +20,18 @@
                     <b-col md="6" sm="12">
                         <b-form-group label="Nome:" label-for="user-name">
                             <b-form-input id="user-name" type="text"
-                                :disabled="mode==='delete'"
-                                v-model="user.name" required
+                                :disabled="mode==='delete' || this.requestUser.type !== 'superAdmin'"
+                                v-model="requestUser.name" required
                                 placeholder="Enter user's name..." />
                         </b-form-group>
                     </b-col>
                     <b-col md="6" sm="12">
                         <b-form-group label="E-mail:" label-for="user-email">
                             <b-form-input id="user-email" type="text"
-                                :disabled="mode==='delete'"
-                                v-model="user.email" required
+                                :disabled="mode==='delete' || 
+                                (user.id != this.requestUser.id && this.requestUser.type === 'superAdmin')
+                                || this.requestUser.type !== 'superAdmin'"
+                                v-model="requestUser.email" required
                                 placeholder="Enter user's e-mail..." />
                         </b-form-group>
                     </b-col>
@@ -39,7 +41,10 @@
                         <b-form-group label="Password:" label-for="user-password" v-show="mode !== 'delete'">
                             <b-form-input id="user-password" type="password"
                             v-if="mode!=='delete'"
-                            v-model="user.password" required
+                            :disabled="mode==='delete' || 
+                            (user.id != this.requestUser.id && this.requestUser.type === 'superAdmin') ||
+                            user.type === 'common' || user.type === 'admin'"
+                            v-model="requestUser.password" required
                             placeholder="Enter user's password..." />
                         </b-form-group>
                     </b-col>
@@ -47,7 +52,10 @@
                         <b-form-group label="Confirm Password:" label-for="user-confirmPassword" v-show="mode !== 'delete'">
                             <b-form-input id="user-confirmPassword" type="password"
                             v-if="mode!=='delete'"
-                            v-model="user.confirmPassword" required
+                            :disabled="mode==='delete' || 
+                            (user.id != this.requestUser.id && this.requestUser.type === 'superAdmin') ||
+                            user.type === 'common' || user.type === 'admin'"
+                            v-model="requestUser.confirmPassword" required
                             placeholder="Confirm user's password..." />
                         </b-form-group>
                     </b-col>
@@ -56,8 +64,9 @@
                     <b-col md="3" sm="12">
                         <b-form-group label="Account Type:" label-for="user-type">
                             <b-form-select id="user-type"                                
-                                :disabled="mode==='delete'"
-                                v-model="user.type" :options="types" />
+                                :disabled="mode==='delete' || this.requestUser.type === 'superAdmin'
+                                || this.requestUser.type !== 'superAdmin'"
+                                v-model="requestUser.type" :options="types" />
                         </b-form-group>
                     </b-col>
                 </b-row>
@@ -75,14 +84,16 @@
 <script>
 import { baseApiUrl, showError } from '@/global'
 import axios from 'axios'
+import { mapState } from 'vuex'
 
 export default {
     name: 'AccountManagement',
+    computed: mapState(['user']),
     data() {
         return {
             mode: 'table',
-            user: {
-                type: null
+            requestUser: {
+                type: null,
             },
             users: [],
             fields: [
@@ -101,7 +112,7 @@ export default {
     },
     methods: {
         changeMode(mode) {
-            if(mode==='create') this.user = { type: null}
+            if(mode==='create') this.requestUser = { type: null}
             this.mode = mode
         },
         loadUsers() {
@@ -112,14 +123,20 @@ export default {
         },
         loadUser(user, mode = 'edit') {
             this.mode = mode
-            this.user = { ...user }
+            this.requestUser = { ...user }
         },
         save() {
-            const method = this.user.id ? 'put' : 'post'
-            const id = this.user.id ? this.user.id : ''
-            axios[method](`${baseApiUrl}/users/${id}`, this.user)
+            const method = this.requestUser.id ? 'put' : 'post'
+            const id = this.requestUser.id ? this.requestUser.id : ''
+
+            // if()
+            axios[method](`${baseApiUrl}/users/${id}`, this.requestUser)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
+                    if(this.user.id === this.requestUser.id) {
+                        this.user.name = this.requestUser.name
+                        this.user.email = this.requestUser.email
+                    }
                     this.reset()
                 })
                 .catch(showError)
@@ -131,13 +148,15 @@ export default {
             
         },
         remove() {
-            axios.delete(`${baseApiUrl}/users/${this.user.id}`)
-                .then(() => {
-                    this.$toasted.global.defaultSuccess()
-                    location.reload()
-                    this.reset()                    
-                })
-                .catch(showError)
+            if(this.requestUser.type !== 'superAdmin' || this.requestUser.type !== 'admin') {
+                axios.delete(`${baseApiUrl}/users/${this.requestUser.id}`)
+                    .then(() => {
+                        this.$toasted.global.defaultSuccess()                    
+                        location.reload()
+                        this.reset()
+                    })
+                    .catch(showError)
+            }
         }
     },
     mounted() {

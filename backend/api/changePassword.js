@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt-nodejs')
 
 module.exports = app => {
-    const { existsOrError, equalsOrError } = app.api.validation
+    const { existsOrError, equalsOrError, notEqualsOrError } = app.api.validation
 
     const encryptPassword = password => {
         const salt = bcrypt.genSaltSync(10)
@@ -17,7 +17,8 @@ module.exports = app => {
             existsOrError(req.body.oldPassword, 'Current Password is Missing')
             existsOrError(req.body.newPassword, 'New Password is Missing')
             existsOrError(req.body.confirmNewPassword, 'Password Confirmation is Missing')
-            equalsOrError(req.body.newPassword, req.body.confirmNewPassword, 'Passwords are Different')
+            equalsOrError(req.body.newPassword, req.body.confirmNewPassword, 'New Password and confirmation are Different')
+            notEqualsOrError(req.body.oldPassword, req.body.newPassword, 'New Password must be Different')
         } catch(msg) {
             return res.status(400).send(msg)
         }
