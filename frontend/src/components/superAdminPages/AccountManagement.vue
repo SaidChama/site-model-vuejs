@@ -14,7 +14,7 @@
             </b-table>
         </div>
         <div class="account" v-if="mode !== 'table'">
-            <b-form>
+            <b-form @keyup.enter="save">
                 <input id="user-id" type="hidden" v-model="user.id" />
                 <b-row>
                     <b-col md="6" sm="12">
@@ -36,7 +36,7 @@
                 </b-row>
                 <b-row>
                     <b-col md="6" sm="12">
-                        <b-form-group label="Password:" label-for="user-password">
+                        <b-form-group label="Password:" label-for="user-password" v-show="mode !== 'delete'">
                             <b-form-input id="user-password" type="password"
                             v-if="mode!=='delete'"
                             v-model="user.password" required
@@ -44,7 +44,7 @@
                         </b-form-group>
                     </b-col>
                     <b-col md="6" sm="12">
-                        <b-form-group label="Confirm Password:" label-for="user-confirmPassword">
+                        <b-form-group label="Confirm Password:" label-for="user-confirmPassword" v-show="mode !== 'delete'">
                             <b-form-input id="user-confirmPassword" type="password"
                             v-if="mode!=='delete'"
                             v-model="user.confirmPassword" required
@@ -73,7 +73,6 @@
 </template>
 
 <script>
-import DeletedAccounts from './DeletedAccounts'
 import { baseApiUrl, showError } from '@/global'
 import axios from 'axios'
 
@@ -125,22 +124,17 @@ export default {
                 })
                 .catch(showError)
         },
-        loadDeletedUsers() {
-            axios.get(`${baseApiUrl}/deletedUsers`)
-                .then(res => {
-                    DeletedAccounts.users = res.data
-                })
-        },
         reset() {
             this.mode = 'table'
-            this.loadDeletedUsers()
             this.user = {}
-            this.loadUsers()            
+            this.loadUsers()
+            
         },
         remove() {
             axios.delete(`${baseApiUrl}/users/${this.user.id}`)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
+                    location.reload()
                     this.reset()                    
                 })
                 .catch(showError)

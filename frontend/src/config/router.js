@@ -6,6 +6,7 @@ import Home from '@/components/publicPages/Home'
 import WhoWeAre from '@/components/publicPages/WhoWeAre'
 import MyAccount from '@/components/myAccount/MyAccount'
 import SuperAdminPages from '@/components/superAdminPages/SuperAdminPages'
+import AccountManagement from '@/components/superAdminPages/AccountManagement'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,10 @@ const routes = [{
     name: 'administration',
     path: '/system-administration',
     component: SuperAdminPages 
+}, {
+    name: 'accountManagement',
+    path: '/system-administration/account-management',
+    component: AccountManagement,
 }]
 
 const router = new VueRouter({

@@ -4,8 +4,10 @@
             <img src="@/assets/generic-logo.png" alt="Logo">
             <hr>
             <div class="auth-title">Login</div>
-            <input v-model="user.email" name="email" type="text" placeholder="E-mail" />
-            <input v-model="user.password" name="password" type="password" placeholder="Password" />
+            <b-form @keyup.enter="signin">
+                <input v-model="user.email" name="email" type="text" placeholder="E-mail"/>
+                <input v-model="user.password" name="password" type="password" placeholder="Password" />
+            </b-form>
             <button @click="signin">Log-in</button>
         </div>
     </div>

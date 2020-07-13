@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import UserDropdown from './UserDropdown'
 
 export default {

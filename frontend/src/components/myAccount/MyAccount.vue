@@ -21,7 +21,7 @@
             <h2 class="subtitle">User: {{ user.name }}</h2>
             <hr class="line">
             <div class="change-password-box">
-                <b-form>
+                <b-form @keyup.enter="changePassword">
                     <b-col xl="3">
                         <b-form-group label="Password:" label-for="old-password">
                             <b-form-input id="old-password" v-model="passwordUpdate.oldPassword"
@@ -90,6 +90,7 @@ export default {
         margin: 2px 3px;
         box-shadow: 0px 0px 14px 6px rgba(0, 0, 0, 0.2);
         min-height: var(--content-height);
+        border-radius: 10px;
     }
 
     .line {

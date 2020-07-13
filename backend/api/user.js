@@ -28,6 +28,7 @@ module.exports = app => {
         } catch(msg) {
             return res.status(400).send(msg)
         }
+        
         if(!user.password) delete user.password
         else user.password = encryptPassword(user.password)
 
@@ -36,7 +37,7 @@ module.exports = app => {
 
         if(user.id) {
             app.db('users')
-                .update(user.deleted)
+                .update(user)
                 .where({ id: user.id })
                 .whereNull('deleted')
                 .then(_ => res.status(204).send())

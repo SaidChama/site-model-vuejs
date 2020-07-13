@@ -11,10 +11,13 @@
         </div>
         <div class="user" v-if="mode === 'user'">
             <h1>Recover Deleted User</h1>
-            <h3>ID: {{ this.user.id }}</h3>
-            <h3>Name: {{ this.user.name }}</h3>
-            <h3>E-Mail: {{ this.user.email }}</h3>
-            <h3>Type: {{ this.user.type }}</h3>
+            <hr>
+            <div class="account-data">
+                <h3>Name: {{ this.user.name }}</h3>
+                <h3>E-Mail: {{ this.user.email }}</h3>
+                <h3>Type: {{ this.user.type }}</h3>
+                <h3>Deleted: {{ this.user.deleted }}</h3>
+            </div>
             <div class="button-box">
                 <b-button variant="primary" @click="restore">Restore</b-button>
                 <b-button variant="secondary" @click="changeMode">Back</b-button>
@@ -55,29 +58,29 @@ export default {
             this.user.email = user.email
             this.user.type = user.type
         },
-        loadUsers() {
+        loadDeletedUsers() {
             axios.get(`${baseApiUrl}/deletedUsers`)
                 .then(res => {
                     this.users = res.data
                 })
         },
+        reset() {
+            this.mode = 'table'
+            this.user = {deleted: null}
+            this.loadDeletedUsers()
+        },
         restore() {
-            const id = this.user.id
-            axios.put(`${baseApiUrl}/deletedUsers/${id}`, this.user)
+            axios.put(`${baseApiUrl}/deletedUsers/${this.user.id}`, this.user)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
+                    location.reload()
                     this.reset()
                 })
                 .catch(showError)
-        },
-        reset() {
-            this.mode = 'table'
-            this.user = {}
-            this.loadUsers()
-        }
+        }        
     },
     mounted() {
-            this.loadUsers()
+            this.loadDeletedUsers()
     }
 }
 </script>
@@ -85,5 +88,10 @@ export default {
 <style>
     .deleted-users {
         min-height: calc(var(--content-height) - 95px);
+    }
+
+    .user {
+        display: flex;
+        flex-direction: column;
     }
 </style>

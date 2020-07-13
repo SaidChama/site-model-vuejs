@@ -1,11 +1,12 @@
 <template>
     <div class="super-admin-pages">
         <PageTitle icon="fa fa-cogs" main="System Administration" />
+        <div>{{ this.accManagement }}</div>
         <div class="super-admin-pages-tabs">
             <b-card no-body>
-                <b-tabs card>
-                    <b-tab title="Account Management" active>
-                        <AccountManagement />
+                <b-tabs card v-model="step">
+                    <b-tab title="Account Management">
+                        <AccountManagement />  
                     </b-tab>
                     <b-tab title="Deleted Accounts">
                         <DeletedAccounts />
@@ -24,6 +25,12 @@ import DeletedAccounts from './DeletedAccounts'
 export default {
     name: 'SuperAdminPages',
     components: { PageTitle, AccountManagement, DeletedAccounts },
+    data() {
+        return {
+            step0: 0,
+            step1: 1
+        }
+    }    
 }
 </script>
 
