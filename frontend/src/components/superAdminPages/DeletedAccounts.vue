@@ -1,7 +1,7 @@
 <template>
     <div class="deleted-users">
         <div class="table" v-if="mode === 'table'">
-            <b-table hover striped :items="users" :fields=fields>
+            <b-table hover striped :items="parentDeletedUsers" :fields=fields>
                 <template slot="actions" slot-scope="data">
                     <b-button @click="loadUser(data.item)" variant="primary" class="mr-2">
                         <i class="fa fa-undo"></i>
@@ -19,7 +19,7 @@
                 <h3>Deleted: {{ this.user.deleted }}</h3>
             </div>
             <div class="button-box">
-                <b-button variant="primary" @click="restore">Restore</b-button>
+                <b-button variant="primary" @click="restore(); usersToParent()">Restore</b-button>
                 <b-button variant="secondary" @click="changeMode">Back</b-button>
             </div>
         </div>
@@ -32,13 +32,14 @@ import axios from 'axios'
 
 export default {
     name: 'DeletedAccounts',
+    props: ['parentDeletedUsers'],
     data() {
         return {
             mode: 'table',
             user: {
                 deleted: null
             },
-            users: [],
+            parentUsers: [],
             fields: [
                 { key: 'name', label: 'Name', sortable: true },
                 { key: 'email', label: 'E-mail', sortable: true },
@@ -58,30 +59,19 @@ export default {
             this.user.email = user.email
             this.user.type = user.type
         },
-        loadDeletedUsers() {
-            axios.get(`${baseApiUrl}/deletedUsers`)
-                .then(res => {
-                    this.users = res.data
-                })
-        },
         reset() {
             this.mode = 'table'
             this.user = {deleted: null}
-            this.loadDeletedUsers()
         },
         restore() {
             axios.put(`${baseApiUrl}/deletedUsers/${this.user.id}`, this.user)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
-                    location.reload()
                     this.reset()
                 })
-                .catch(showError)
+                .catch(showError)      
         }        
     },
-    mounted() {
-            this.loadDeletedUsers()
-    }
 }
 </script>
 

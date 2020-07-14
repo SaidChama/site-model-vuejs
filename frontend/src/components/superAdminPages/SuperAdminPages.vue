@@ -1,15 +1,14 @@
 <template>
     <div class="super-admin-pages">
         <PageTitle icon="fa fa-cogs" main="System Administration" />
-        <div>{{ this.accManagement }}</div>
         <div class="super-admin-pages-tabs">
             <b-card no-body>
-                <b-tabs card v-model="step">
-                    <b-tab title="Account Management">
-                        <AccountManagement />  
+                <b-tabs card>
+                    <b-tab title="Account Management" active>
+                        <AccountManagement :parentUsers="parentUsers" />  
                     </b-tab>
-                    <b-tab title="Deleted Accounts">
-                        <DeletedAccounts />
+                    <b-tab title="Deleted Accounts" >
+                        <DeletedAccounts :parentDeletedUsers="parentDeletedUsers" />
                     </b-tab>
                 </b-tabs>
             </b-card>
@@ -21,16 +20,44 @@
 import PageTitle from '../templates/PageTitle'
 import AccountManagement from './AccountManagement'
 import DeletedAccounts from './DeletedAccounts'
+import { baseApiUrl } from '@/global'
+import axios from 'axios'
 
 export default {
     name: 'SuperAdminPages',
     components: { PageTitle, AccountManagement, DeletedAccounts },
     data() {
         return {
-            step0: 0,
-            step1: 1
+            parentUsers: [],
+            parentDeletedUsers: []
         }
-    }    
+    },
+    methods: {
+        loadUsers() {
+            axios.get(`${baseApiUrl}/users`)
+                .then(res => {
+                    this.parentUsers = res.data
+                })
+        },
+        loadDeletedUsers() {
+            axios.get(`${baseApiUrl}/deletedUsers`)
+                .then(res => {
+                    this.parentDeletedUsers = res.data
+                })
+        },
+    },
+    watch: {
+        parentDeletedUsers() {
+            this.loadDeletedUsers()
+        },
+        parentUsers() {
+            this.loadUsers()
+        }
+    },
+    mounted() {
+        this.loadUsers()
+        this.loadDeletedUsers()
+    }
 }
 </script>
 

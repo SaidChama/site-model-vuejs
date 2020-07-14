@@ -2,7 +2,7 @@
     <div class="account-management">
         <div class="table" v-if="mode === 'table'">
             <b-button variant="primary" @click="changeMode('create')">Create New Account</b-button>
-            <b-table hover striped :items="users" :fields="fields">
+            <b-table hover striped :items="parentUsers" :fields="fields">
                 <template slot="actions" slot-scope="data">
                     <b-button @click="loadUser(data.item)" variant="warning" class="mr-2">
                         <i class="fa fa-pencil"></i>
@@ -88,6 +88,7 @@ import { mapState } from 'vuex'
 
 export default {
     name: 'AccountManagement',
+    props: ['parentUsers'],
     computed: mapState(['user']),
     data() {
         return {
@@ -95,7 +96,6 @@ export default {
             requestUser: {
                 type: null,
             },
-            users: [],
             fields: [
                 { key: 'name', label: 'Name', sortable: true },
                 { key: 'email', label: 'E-mail', sortable: true },
@@ -115,12 +115,6 @@ export default {
             if(mode==='create') this.requestUser = { type: null}
             this.mode = mode
         },
-        loadUsers() {
-            axios.get(`${baseApiUrl}/users`)
-                .then(res => {
-                    this.users = res.data
-                })
-        },
         loadUser(user, mode = 'edit') {
             this.mode = mode
             this.requestUser = { ...user }
@@ -129,7 +123,6 @@ export default {
             const method = this.requestUser.id ? 'put' : 'post'
             const id = this.requestUser.id ? this.requestUser.id : ''
 
-            // if()
             axios[method](`${baseApiUrl}/users/${id}`, this.requestUser)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
@@ -143,25 +136,19 @@ export default {
         },
         reset() {
             this.mode = 'table'
-            this.user = {}
-            this.loadUsers()
-            
+            this.user = {} 
         },
         remove() {
             if(this.requestUser.type !== 'superAdmin' || this.requestUser.type !== 'admin') {
                 axios.delete(`${baseApiUrl}/users/${this.requestUser.id}`)
                     .then(() => {
                         this.$toasted.global.defaultSuccess()                    
-                        location.reload()
                         this.reset()
                     })
                     .catch(showError)
             }
         }
     },
-    mounted() {
-            this.loadUsers()
-    }
 }
 </script>
 
