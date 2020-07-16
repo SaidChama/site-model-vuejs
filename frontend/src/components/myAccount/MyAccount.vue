@@ -2,26 +2,30 @@
     <div class="my-account">
         <PageTitle icon="fa fa-user" main="My Account" />
         <div class="account-content" v-if="mode === 'acc-info'">
-            <h2 class="subtitle">Account Info</h2>
-            <hr class="line">
             <div class="account-info-box">
-                <p class="account-info">
-                    <i class="fa fa-id-badge" /> Name: {{ this.user.name }}
-                </p>
-                <p class="account-info">
-                    <i class="fa fa-envelope" /> E-Mail: {{ this.user.email }}
-                </p>
-                <p class="account-info">
-                    <i class="fa fa-user-circle" /> Account Type: {{ this.user.type }}
-                </p>
-                <b-button variant="primary" @click="changeMode" class="password-change">Change Password</b-button>
+                <div>
+                    <h2 class="subtitle">Account Info</h2>
+                    <hr>
+                    <p class="account-info">
+                        <i class="fa fa-id-badge" /> Name: {{ this.user.name }}
+                    </p>
+                    <p class="account-info">
+                        <i class="fa fa-envelope" /> E-Mail: {{ this.user.email }}
+                    </p>
+                    <p class="account-info">
+                        <i class="fa fa-user-circle" /> Account Type: {{ this.user.type }}
+                    </p>
+                </div>
+                <div class="button-box">
+                    <b-button variant="primary" @click="changeMode" class="password-change">Change Password</b-button>
+                </div>
             </div>
         </div>
         <div class="change-password" v-if="mode==='change-password'">
-            <h2 class="subtitle">User: {{ user.name }}</h2>
-            <hr class="line">
             <div class="change-password-box">
                 <b-form @keyup.enter="changePassword">
+                    <h2 class="subtitle">User: {{ user.name }}</h2>
+                    <hr>
                     <b-col xl="3">
                         <b-form-group label="Password:" label-for="old-password">
                             <b-form-input id="old-password" v-model="passwordUpdate.oldPassword"
@@ -93,20 +97,16 @@ export default {
         border-radius: 10px;
     }
 
-    .line {
-        margin: 0px 15px;
-        padding: 0px 30px 30px 30px;
-    }
-
-    .subtitle {
-        padding-left: 75px;
-    }
-
-    .account-info-box {
+    .account-info-box, .change-password-box {
         display: flex;
+        min-height: var(--content-height);
         flex-direction: column;
         align-items: left;
-        justify-content: center;
+        justify-content: space-between;
+    }
+
+    .change-password-box h2, .account-info-box h2{
+        padding: 30px 0px 0px 100px;
     }
 
     .account-info-box i {
@@ -127,12 +127,13 @@ export default {
         padding-right: 10.5px;
     }
 
-    .account-info {
+    .account-info, .b-form-group {
         padding-left: 100px;
     }
 
-    .password-change {
-        margin: 200px 0px 20px 100px;
+    .button-box {
+        display: flex;
+        margin: 0px 0px 20px 100px;
         padding: 10px;
         border-radius: 30px;
         color: #fff;
@@ -140,17 +141,5 @@ export default {
         width: 180px;
     }
 
-    .button-box .button {
-        margin: 60px 0px 20px 20px;
-        padding: 10px;
-        border-radius: 30px;
-        color: #fff;
-        font-weight: 1000;
-        width: 100px;
-    }
 
-    .change-password-box {
-        box-sizing: border-box;
-        padding: 0px 100px;
-    }
 </style>

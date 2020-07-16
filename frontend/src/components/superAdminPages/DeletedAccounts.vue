@@ -1,6 +1,9 @@
 <template>
     <div class="deleted-users">
         <div class="table" v-if="mode === 'table'">
+            <div class="table-title-box">
+                <h3 class="table-title">Deleted Account List</h3>
+            </div>
             <b-table hover striped :items="parentDeletedUsers" :fields=fields>
                 <template slot="actions" slot-scope="data">
                     <b-button @click="loadUser(data.item)" variant="primary" class="mr-2">
@@ -10,9 +13,9 @@
             </b-table>
         </div>
         <div class="user" v-if="mode === 'user'">
-            <h1>Recover Deleted User</h1>
-            <hr>
             <div class="account-data">
+                <h1>Recover Deleted User</h1>
+                <hr>
                 <h3>Name: {{ this.user.name }}</h3>
                 <h3>E-Mail: {{ this.user.email }}</h3>
                 <h3>Type: {{ this.user.type }}</h3>
@@ -83,5 +86,26 @@ export default {
     .user {
         display: flex;
         flex-direction: column;
+        min-height: calc(var(--content-height) - 95px);
+        justify-content: space-between;
+        align-items: left;
+    }
+
+    .account-data hr {
+        padding-bottom: 10px;
+    }
+
+    .account-data h3 {
+        padding-left: 20px;
+    }
+
+    .button-box {
+        padding-left: 15px;
+    }
+
+    .button-box button {
+        padding: 5px 15px;
+        margin-right: 10px;
+        font-size: 1.2rem;
     }
 </style>

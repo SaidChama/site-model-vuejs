@@ -1,7 +1,7 @@
 <template>
     <div class="menu" v-show="isMenuVisible">
-        <MenuComponent path="/" component="Home"/>
-        <MenuComponent path="/info" component="Info"/>
+        <MenuComponent class="item" path="/" component="Home"/>
+        <MenuComponent class="item" path="/info" component="Info"/>
     </div>
 
 </template>
@@ -25,5 +25,9 @@ export default {
 
     .menu h2 {
         color: #fff
+    }
+
+    .item:hover {
+        text-decoration: none;
     }    
 </style>

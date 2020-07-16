@@ -1,7 +1,10 @@
 <template>
     <div class="account-management">
         <div class="table" v-if="mode === 'table'">
-            <b-button variant="primary" @click="changeMode('create')">Create New Account</b-button>
+            <div class="table-title-box">
+                <h3 class="table-title">Account List</h3>
+                <b-button class="create-button" variant="primary" @click="changeMode('create')">Create New Account</b-button>
+            </div>
             <b-table hover striped :items="parentUsers" :fields="fields">
                 <template slot="actions" slot-scope="data">
                     <b-button @click="loadUser(data.item)" variant="warning" class="mr-2">
@@ -15,6 +18,9 @@
         </div>
         <div class="account" v-if="mode !== 'table'">
             <b-form @keyup.enter="save">
+                <h3 class="edit-title" v-if="mode === 'edit'">Edit Account</h3>
+                <h3 class="delete-title" v-if="mode === 'delete'">Delete Account</h3>
+                <hr>
                 <input id="user-id" type="hidden" v-model="user.id" />
                 <b-row>
                     <b-col md="6" sm="12">
@@ -71,7 +77,7 @@
                     </b-col>
                 </b-row>
             </b-form>
-            <b-row>
+            <b-row class="button-box">
                 <b-button variant="primary" @click="save" v-if="mode === 'create'">Create</b-button>
                 <b-button variant="success" @click="save" v-if="mode === 'edit'">Save</b-button>
                 <b-button variant="danger" @click="remove" v-if="mode === 'delete'">Delete</b-button>
@@ -155,5 +161,42 @@ export default {
 <style>
     .account-management {
         min-height: calc(var(--content-height) - 95px);
+    }
+
+    .table-title-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding-bottom: 15px;
+    }
+
+    .table-title {
+        margin: 0px;
+        margin-left: 3vw;
+        font-weight: 1000;
+    }
+
+    .create-button {
+        margin: 0px;
+        margin-right: 5vw;
+    }
+
+    .account {
+        min-height: calc(var(--content-height) - 95px);;
+        display: flex;
+        flex-direction: column;
+
+        justify-content: space-between;
+    }
+
+    .button-box {
+        padding-left: 15px;
+    }
+
+    .button-box button {
+        padding: 5px 15px;
+        margin-right: 10px;
+        font-size: 1.2rem;
     }
 </style>
