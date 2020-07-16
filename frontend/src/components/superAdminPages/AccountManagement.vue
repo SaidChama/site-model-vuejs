@@ -15,7 +15,7 @@
                     </b-button>
                 </template>
             </b-table>
-            <b-pagination class="pagination" size="md" v-model="page" :total-rows="usersCount" :per-page="usersLimit" />
+            <b-pagination size="md" v-model="page" :total-rows="usersCount" :per-page="usersLimit" />
         </div>
         <div class="account" v-if="mode !== 'table'">
             <b-form @keyup.enter="save">
@@ -27,7 +27,8 @@
                     <b-col md="6" sm="12">
                         <b-form-group label="Nome:" label-for="user-name">
                             <b-form-input id="user-name" type="text"
-                                :disabled="mode==='delete' || this.requestUser.type !== 'superAdmin'"
+                                :disabled="mode==='delete' || this.requestUser.type !== 'superAdmin'
+                                && mode!=='create'"
                                 v-model="requestUser.name" required
                                 placeholder="Enter user's name..." />
                         </b-form-group>
@@ -37,7 +38,7 @@
                             <b-form-input id="user-email" type="text"
                                 :disabled="mode==='delete' || 
                                 (user.id != this.requestUser.id && this.requestUser.type === 'superAdmin')
-                                || this.requestUser.type !== 'superAdmin'"
+                                || this.requestUser.type !== 'superAdmin' && mode!=='create'"
                                 v-model="requestUser.email" required
                                 placeholder="Enter user's e-mail..." />
                         </b-form-group>
@@ -45,7 +46,7 @@
                 </b-row>
                 <b-row>
                     <b-col md="6" sm="12">
-                        <b-form-group label="Password:" label-for="user-password" v-show="mode !== 'delete'">
+                        <b-form-group label="Password:" label-for="user-password" v-if="mode !== 'delete'">
                             <b-form-input id="user-password" type="password"
                             v-if="mode!=='delete'"
                             :disabled="mode==='delete' || 
@@ -56,7 +57,7 @@
                         </b-form-group>
                     </b-col>
                     <b-col md="6" sm="12">
-                        <b-form-group label="Confirm Password:" label-for="user-confirmPassword" v-show="mode !== 'delete'">
+                        <b-form-group label="Confirm Password:" label-for="user-confirmPassword" v-if="mode !== 'delete'">
                             <b-form-input id="user-confirmPassword" type="password"
                             v-if="mode!=='delete'"
                             :disabled="mode==='delete' || 
@@ -71,8 +72,8 @@
                     <b-col md="3" sm="12">
                         <b-form-group label="Account Type:" label-for="user-type">
                             <b-form-select id="user-type"                                
-                                :disabled="mode==='delete' || this.requestUser.type === 'superAdmin'
-                                || this.requestUser.type !== 'superAdmin'"
+                                :disabled="mode==='delete' || this.requestUser.type==='superAdmin'
+                                || this.requestUser.type !== 'superAdmin' && mode!=='create'"
                                 v-model="requestUser.type" :options="types" />
                         </b-form-group>
                     </b-col>
@@ -104,8 +105,6 @@ export default {
                 type: null,
             },
             page: 1,
-            count: 0,
-            limit: 0,
             fields: [
                 { key: 'name', label: 'Name', sortable: true },
                 { key: 'email', label: 'E-mail', sortable: true },
@@ -163,9 +162,6 @@ export default {
         page() {
             this.$emit('changeUsersPage', this.page)
         }
-    },
-    mounted() {
-        this.loadUsers()
     }
 }
 </script>

@@ -1,10 +1,18 @@
 module.exports = app => {
 
-    const getDeleted = (req, res) => {
+    const limit = 10
+    const getDeleted = async (req, res) => {
+        const page = req.query.page || 1
+
+        const result = await app.db('users').whereNotNull('deleted').count('id').first()
+        const count = parseInt(result.count)
+
+
         app.db('users')
             .select('id', 'name', 'email', 'type', 'deleted')
             .whereNotNull('deleted')
-            .then(users => res.json(users))
+            .limit(limit).offset(page * limit - limit)
+            .then(users => res.json({ data: users, count, limit}))
             .catch(err => res.status(500).send(err))
     }
 

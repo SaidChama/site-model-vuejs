@@ -11,6 +11,7 @@
                     </b-button>
                 </template>
             </b-table>
+            <b-pagination size="md" v-model="page" :total-rows="deletedUsersCount" :per-page="deletedUsersLimit" />
         </div>
         <div class="user" v-if="mode === 'user'">
             <div class="account-data">
@@ -35,14 +36,15 @@ import axios from 'axios'
 
 export default {
     name: 'DeletedAccounts',
-    props: ['parentDeletedUsers'],
+    props: ['parentDeletedUsers', 'deletedUsersCount', 'deletedUsersLimit'],
     data() {
         return {
             mode: 'table',
             user: {
-                deleted: null
+                deleted: null,
             },
             parentUsers: [],
+            page: 1,
             fields: [
                 { key: 'name', label: 'Name', sortable: true },
                 { key: 'email', label: 'E-mail', sortable: true },
@@ -72,9 +74,14 @@ export default {
                     this.$toasted.global.defaultSuccess()
                     this.reset()
                 })
-                .catch(showError)      
+                .catch(showError)
         }        
     },
+    watch: {
+        page() {
+            this.$emit('changeDeletedUsersPage', this.page)
+        }
+    }
 }
 </script>
 
@@ -107,5 +114,10 @@ export default {
         padding: 5px 15px;
         margin-right: 10px;
         font-size: 1.2rem;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
     }
 </style>

@@ -9,7 +9,10 @@
                             :usersCount="usersCount" @changeUsersPage="changeUsersPage" />  
                     </b-tab>
                     <b-tab title="Deleted Accounts" >
-                        <DeletedAccounts :parentDeletedUsers="parentDeletedUsers" />
+                        <DeletedAccounts :parentDeletedUsers="parentDeletedUsers"
+                            :deletedUsersLimit="deletedUsersLimit"
+                            :deletedUsersCount="deletedUsersCount"
+                            @changeDeletedUsersPage="changeDeletedUsersPage" />
                     </b-tab>
                 </b-tabs>
             </b-card>
@@ -33,7 +36,10 @@ export default {
             parentDeletedUsers: [],
             usersPage: 1,
             usersLimit: 0,
-            usersCount: 0
+            usersCount: 0,
+            deletedUsersPage: 1,
+            deletedUsersLimit: 0,
+            deletedUsersCount: 0
         }
     },
     methods: {
@@ -46,13 +52,18 @@ export default {
                 })
         },
         loadDeletedUsers() {
-            axios.get(`${baseApiUrl}/deletedUsers`)
+            axios.get(`${baseApiUrl}/deletedUsers?page=${this.deletedUsersPage}`)
                 .then(res => {
-                    this.parentDeletedUsers = res.data
+                    this.parentDeletedUsers = res.data.data
+                    this.deletedUsersCount = res.data.count
+                    this.deletedUsersLimit = res.data.limit
                 })
         },
         changeUsersPage(value) {
             this.usersPage = value
+        },
+        changeDeletedUsersPage(value) {
+            this.deletedUsersPage = value
         }
     },
     watch: {
