@@ -15,6 +15,7 @@
                     </b-button>
                 </template>
             </b-table>
+            <b-pagination class="pagination" size="md" v-model="page" :total-rows="usersCount" :per-page="usersLimit" />
         </div>
         <div class="account" v-if="mode !== 'table'">
             <b-form @keyup.enter="save">
@@ -94,7 +95,7 @@ import { mapState } from 'vuex'
 
 export default {
     name: 'AccountManagement',
-    props: ['parentUsers'],
+    props: ['parentUsers', 'usersCount', 'usersLimit'],
     computed: mapState(['user']),
     data() {
         return {
@@ -102,6 +103,9 @@ export default {
             requestUser: {
                 type: null,
             },
+            page: 1,
+            count: 0,
+            limit: 0,
             fields: [
                 { key: 'name', label: 'Name', sortable: true },
                 { key: 'email', label: 'E-mail', sortable: true },
@@ -153,8 +157,16 @@ export default {
                     })
                     .catch(showError)
             }
+        },
+    },
+    watch: {
+        page() {
+            this.$emit('changeUsersPage', this.page)
         }
     },
+    mounted() {
+        this.loadUsers()
+    }
 }
 </script>
 
@@ -191,12 +203,19 @@ export default {
     }
 
     .button-box {
-        padding-left: 15px;
+        display: flex;
+        width: auto;
     }
 
     .button-box button {
         padding: 5px 15px;
         margin-right: 10px;
         font-size: 1.2rem;
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 </style>
