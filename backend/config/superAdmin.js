@@ -3,7 +3,7 @@ module.exports = middleware => {
         if(req.user.type === 'superAdmin') {
             middleware(req, res, next)
         } else {
-            res.status(401).send('Usuário não é administrador.')
+            res.status(401).send("You don't have the authorization required to complete this action")
         }
     }
 }
