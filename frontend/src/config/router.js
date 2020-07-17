@@ -8,6 +8,8 @@ import MyAccount from '@/components/myAccount/MyAccount'
 import SuperAdminPages from '@/components/superAdminPages/SuperAdminPages'
 import AccountManagement from '@/components/superAdminPages/AccountManagement'
 
+import { userKey } from '@/global.js'
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -29,7 +31,8 @@ const routes = [{
 }, {
     name: 'administration',
     path: '/system-administration',
-    component: SuperAdminPages 
+    component: SuperAdminPages,
+    meta: { requiresAdmin: true }
 }, {
     name: 'accountManagement',
     path: '/system-administration/account-management',
@@ -39,6 +42,17 @@ const routes = [{
 const router = new VueRouter({
     mode: 'history',
     routes
+})
+
+router.beforeEach((to, from, next) => {
+    const json = localStorage.getItem(userKey)
+
+    if(to.matched.some(record => record.meta.requiresAdmin)) {
+        const user = JSON.parse(json)
+        user && (user.type === 'admin' || user.type === 'superAdmin') ? next() : next({ path: '/' })
+    } else {
+        next()
+    }
 })
 
 export default router

@@ -27,8 +27,7 @@
                     <b-col md="6" sm="12">
                         <b-form-group label="Nome:" label-for="user-name">
                             <b-form-input id="user-name" type="text"
-                                :disabled="mode==='delete' || this.requestUser.type !== 'superAdmin'
-                                && mode!=='create'"
+                                :disabled="mode==='delete'"
                                 v-model="requestUser.name" required
                                 placeholder="Enter user's name..." />
                         </b-form-group>
@@ -36,9 +35,7 @@
                     <b-col md="6" sm="12">
                         <b-form-group label="E-mail:" label-for="user-email">
                             <b-form-input id="user-email" type="text"
-                                :disabled="mode==='delete' || 
-                                (user.id != this.requestUser.id && this.requestUser.type === 'superAdmin')
-                                || this.requestUser.type !== 'superAdmin' && mode!=='create'"
+                                :disabled="mode==='delete'"
                                 v-model="requestUser.email" required
                                 placeholder="Enter user's e-mail..." />
                         </b-form-group>
@@ -49,9 +46,7 @@
                         <b-form-group label="Password:" label-for="user-password" v-if="mode !== 'delete'">
                             <b-form-input id="user-password" type="password"
                             v-if="mode!=='delete'"
-                            :disabled="mode==='delete' || 
-                            (user.id != this.requestUser.id && this.requestUser.type === 'superAdmin') ||
-                            user.type === 'common' || user.type === 'admin'"
+                            :disabled="mode==='delete'"
                             v-model="requestUser.password" required
                             placeholder="Enter user's password..." />
                         </b-form-group>
@@ -60,9 +55,7 @@
                         <b-form-group label="Confirm Password:" label-for="user-confirmPassword" v-if="mode !== 'delete'">
                             <b-form-input id="user-confirmPassword" type="password"
                             v-if="mode!=='delete'"
-                            :disabled="mode==='delete' || 
-                            (user.id != this.requestUser.id && this.requestUser.type === 'superAdmin') ||
-                            user.type === 'common' || user.type === 'admin'"
+                            :disabled="mode==='delete'"
                             v-model="requestUser.confirmPassword" required
                             placeholder="Confirm user's password..." />
                         </b-form-group>
@@ -72,8 +65,7 @@
                     <b-col md="3" sm="12">
                         <b-form-group label="Account Type:" label-for="user-type">
                             <b-form-select id="user-type"                                
-                                :disabled="mode==='delete' || this.requestUser.type==='superAdmin'
-                                || this.requestUser.type !== 'superAdmin' && mode!=='create'"
+                                :disabled="mode==='delete'"
                                 v-model="requestUser.type" :options="types" />
                         </b-form-group>
                     </b-col>
@@ -114,8 +106,8 @@ export default {
             types: [
                 { text: 'Select One', value: null },
                 { text: 'Common User', value: 'common' },
-                { text: 'Builder', value: 'admin' },
-                { text: 'Admin', value: 'superAdmin' },
+                { text: 'Admin', value: 'admin' },
+                { text: 'Super Admin', value: 'superAdmin' },
             ]
         }
     },

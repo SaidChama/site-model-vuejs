@@ -8,11 +8,12 @@
                         <AccountManagement :parentUsers="parentUsers" :usersLimit="usersLimit" 
                             :usersCount="usersCount" @changeUsersPage="changeUsersPage" />  
                     </b-tab>
-                    <b-tab title="Deleted Accounts" >
+                    <b-tab title="Deleted Accounts" v-if="user.type==='superAdmin'" >
                         <DeletedAccounts :parentDeletedUsers="parentDeletedUsers"
                             :deletedUsersLimit="deletedUsersLimit"
                             :deletedUsersCount="deletedUsersCount"
-                            @changeDeletedUsersPage="changeDeletedUsersPage" />
+                            @changeDeletedUsersPage="changeDeletedUsersPage"
+                            v-if="user.type==='superAdmin'" />
                     </b-tab>
                 </b-tabs>
             </b-card>
@@ -25,11 +26,13 @@ import PageTitle from '../templates/PageTitle'
 import AccountManagement from './AccountManagement'
 import DeletedAccounts from './DeletedAccounts'
 import { baseApiUrl } from '@/global'
+import { mapState } from 'vuex'
 import axios from 'axios'
 
 export default {
     name: 'SuperAdminPages',
     components: { PageTitle, AccountManagement, DeletedAccounts },
+    computed: mapState(['user']),
     data() {
         return {
             parentUsers: [],

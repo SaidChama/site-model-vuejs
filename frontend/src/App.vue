@@ -2,7 +2,8 @@
 	<div id="app" :class="{'hide-menu': !isMenuVisible || $route.name === 'auth'}">
 		<Header title="Site Name" />
 		<Menu v-if="$route.name !== 'auth'" />
-		<Content />
+		<Loading v-if="validatingToken" />
+		<Content v-if="!validatingToken" />
 		<Footer />
 	</div>
 </template>
@@ -15,10 +16,11 @@ import Header from '@/components/templates/Header'
 import Menu from '@/components/templates/Menu'
 import Content from '@/components/templates/Content'
 import Footer from '@/components/templates/Footer'
+import Loading from '@/components/templates/Loading'
 
 export default {
 	name: "App",
-	components: { Header, Menu, Content, Footer },
+	components: { Header, Menu, Content, Footer, Loading },
 	computed: mapState(['isMenuVisible', 'user', 'userBool']),
 	data() {
 		return {
@@ -46,7 +48,7 @@ export default {
 				this.$router.push({ name: 'auth' })
 			}
 
-			this.validatinToken = false
+			this.validatingToken = false
 		}
 	},
 	created() {
