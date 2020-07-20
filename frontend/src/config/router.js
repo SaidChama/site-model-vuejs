@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Auth from '@/components/auth/Auth'
-import Home from '@/components/publicPages/Home'
+import Home from '@/components/publicPages/home/Home'
 import WhoWeAre from '@/components/publicPages/WhoWeAre'
 import MyAccount from '@/components/myAccount/MyAccount'
 import SuperAdminPages from '@/components/superAdminPages/SuperAdminPages'

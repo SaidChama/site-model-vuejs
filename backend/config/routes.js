@@ -4,6 +4,7 @@ const superAdmin = require('./superAdmin')
 module.exports = app => {
     app.post('/signin', app.api.auth.signin)
     app.post('/validateToken', app.api.auth.validateToken)
+    app.post('/signup', app.api.user.save)
 
     app.route('/users')
         .all(app.config.passport.authenticate())

@@ -12,6 +12,9 @@ module.exports = app => {
         const user = { ...req.body }
         if(req.params.id) user.id = req.params.id
 
+        if(!req.originalUrl.startsWith('/users')) user.type = 'common'
+        if(!req.user || req.user.type !== 'superAdmin') user.type = 'common'
+
         try {
             existsOrError(user.name, 'Name is Missing')
             existsOrError(user.email, 'E-mail is Missing')

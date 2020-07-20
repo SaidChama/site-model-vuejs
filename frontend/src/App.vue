@@ -78,7 +78,7 @@ export default {
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 
-		height: 100vh;
+		min-height: 100vh;
 		display: grid;
 		grid-template-rows: var(--header-height) 1fr var(--footer-height);
 		grid-template-columns: var(--menu-width) 1fr;

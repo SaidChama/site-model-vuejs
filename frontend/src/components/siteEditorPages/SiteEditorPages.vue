@@ -1,7 +1,7 @@
 <template>
     <div class="site-editor-pages">
         <PageTitle icon="fa fa-pencil-square-o" main="Site Editor" />
-        <div class="site-editor-pages">
+        <div class="site-editor-pages-tabs">
             <b-card no-body>
                 <b-tabs card>
                     <b-tab title="Home" active>
@@ -24,5 +24,11 @@ export default {
 </script>
 
 <style>
+    .site-editor-pages-tabs {
+        margin: 2px 3px;
+    }
 
+    .card {
+        height: 100%
+    }
 </style>

@@ -4,12 +4,12 @@ exports.up = function(knex, Promise) {
         table.increments('id').primary()
         table.string('title').notNull()
         table.string('description').notNull()
-        table.string('imageUrl')
+        table.binary('thumbnail')
         table.string('externalUrl')
-        table.string('content')
+        table.binary('content')
     })
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.droptable('home')
+    return knex.schema.dropTable('home')
 };

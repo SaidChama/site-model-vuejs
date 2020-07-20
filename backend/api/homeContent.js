@@ -28,17 +28,18 @@ module.exports = app => {
 
     const get = (req, res) => {
         app.db('home')
-            .select('id', 'title')
+            .select('id', 'title', 'description', 'thumbnail', 'externalUrl', 'content')
             .then(homeContent => res.json(homeContent))
             .catch(err => res.status(500).send(err))
     }
 
     const getById = (req, res) => {
         app.db('home')
-            .select('id', 'title', 'description', 'imageUrl', 'externalUrl', 'content')
             .where({ id: req.params.id })
             .first()
-            .then(homeContent => res.json(homeContent))
+            .then(homeContent => {
+                homeContent.content = homeContent.content.toString()
+                return res.json(homeContent)})
             .catch(err => res.status(500).send(err))
     }
 
