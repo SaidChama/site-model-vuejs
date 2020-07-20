@@ -27,5 +27,16 @@ module.exports = app => {
 
     app.route('/changePassword/:id')
         .all(app.config.passport.authenticate())
-        .put(app.api.changePassword.change) 
+        .put(app.api.changePassword.change)
+
+    app.route('/homeContent')
+        // .all(app.config.passport.authenticate())
+        .get(app.api.homeContent.get)
+        .post(app.api.homeContent.save)
+
+    app.route('/homeContent/:id')
+        // .all(app.config.passport.authenticate())
+        .get(app.api.homeContent.getById)
+        .put(app.api.homeContent.save)
+        .delete(app.api.homeContent.remove)
 }

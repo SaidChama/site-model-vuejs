@@ -9,6 +9,8 @@
         </div>
         <div class="user-dropdown-content">
             <router-link to="/my-account"><i class="fa fa-user"></i> My Account</router-link>
+            <router-link to="/site-editor"><i class="fa fa-pencil-square-o"></i> Site Editor</router-link>
+
             <router-link to="/system-administration" v-if="user.type==='admin'
             || user.type==='superAdmin'"><i class="fa fa-cogs"></i> Admin</router-link>
             <a href @click.prevent="logout"><i class="fa fa-sign-out"></i> Logout</a>

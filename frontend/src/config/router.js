@@ -6,7 +6,7 @@ import Home from '@/components/publicPages/Home'
 import WhoWeAre from '@/components/publicPages/WhoWeAre'
 import MyAccount from '@/components/myAccount/MyAccount'
 import SuperAdminPages from '@/components/superAdminPages/SuperAdminPages'
-import AccountManagement from '@/components/superAdminPages/AccountManagement'
+import SiteEditorPages from '@/components/siteEditorPages/SiteEditorPages'
 
 import { userKey } from '@/global.js'
 
@@ -34,9 +34,9 @@ const routes = [{
     component: SuperAdminPages,
     meta: { requiresAdmin: true }
 }, {
-    name: 'accountManagement',
-    path: '/system-administration/account-management',
-    component: AccountManagement,
+    name: 'siteEditor',
+    path: '/site-editor',
+    component: SiteEditorPages,
 }]
 
 const router = new VueRouter({

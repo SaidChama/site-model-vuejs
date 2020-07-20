@@ -25,7 +25,7 @@
                 <input id="user-id" type="hidden" v-model="user.id" />
                 <b-row>
                     <b-col md="6" sm="12">
-                        <b-form-group label="Nome:" label-for="user-name">
+                        <b-form-group label="Name:" label-for="user-name">
                             <b-form-input id="user-name" type="text"
                                 :disabled="mode==='delete'"
                                 v-model="requestUser.name" required
