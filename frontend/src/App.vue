@@ -92,6 +92,6 @@ export default {
 		grid-template-areas:
 			"header header"
 			"content content"
-			"footer footer";	
+			"footer footer";
 	}
 </style>

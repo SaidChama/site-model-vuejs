@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 import Auth from '@/components/auth/Auth'
 import Home from '@/components/publicPages/home/Home'
-import WhoWeAre from '@/components/publicPages/WhoWeAre'
+import About from '@/components/publicPages/About'
 import MyAccount from '@/components/myAccount/MyAccount'
 import SuperAdminPages from '@/components/superAdminPages/SuperAdminPages'
 import SiteEditorPages from '@/components/siteEditorPages/SiteEditorPages'
@@ -21,9 +21,9 @@ const routes = [{
     path: '/login',
     component: Auth
 }, {
-    name: 'whoWeAre',
-    path: '/info',
-    component: WhoWeAre
+    name: 'about',
+    path: '/about',
+    component: About
 }, {
     name: 'myAccount',
     path: '/my-account',

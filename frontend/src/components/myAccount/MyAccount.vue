@@ -82,7 +82,7 @@ export default {
                     this.reset()
                 })
                 .catch(showError)
-        }        
+        }
     }
 }
 </script>

@@ -35,6 +35,7 @@ module.exports = app => {
 
     const getById = (req, res) => {
         app.db('home')
+            .select('id', 'title', 'description', 'thumbnail', 'externalUrl', 'content')
             .where({ id: req.params.id })
             .first()
             .then(homeContent => {

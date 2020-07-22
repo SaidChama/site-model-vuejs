@@ -7,7 +7,6 @@
                     <HomeItem :homeItem="homeItem" />
                 </li>
             </ul>
-            
         </div>
     </div>
 </template>
@@ -45,5 +44,26 @@ export default {
     .home-content {
         background-color: #fff;
         min-height: var(--content-height);
+        display: flex;
+        /* flex-direction: column; */
+        flex-wrap: wrap;
+
+        justify-content: center;
+        align-items: start;
+    }
+
+    .home-content ul {
+        list-style-type: none;
+        margin-top: 30px;
+        display: flex;
+        /* flex-direction: column; */
+        flex-wrap: wrap;
+
+        justify-content: center;
+        align-items: center;
+    }
+
+    .home-content ul li {
+        text-decoration: none;
     }
 </style>

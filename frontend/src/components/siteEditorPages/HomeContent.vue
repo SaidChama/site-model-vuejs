@@ -83,10 +83,9 @@ export default {
         },
         loadContent(content, mode = 'edit') {
             this.mode = mode
-            axios.get(`${baseApiUrl}/homeContent/${content.id}`)
-                .then(res => {
-                    this.content = res.data
-                })
+            // axios.get(`${baseApiUrl}/homeContent/${content.id}`)
+            //     .then(res => this.content = res.data)
+            this.content = { ...content }
         },
         save() {
             const method = this.content.id ? 'put' : 'post'
